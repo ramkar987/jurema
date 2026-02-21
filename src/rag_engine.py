@@ -1,17 +1,18 @@
 """
-Motor RAG (Retrieval-Augmented Generation) para consulta jurídica.
-Usa LangChain 0.3+, FAISS e OpenAI GPT.
+Motor RAG com Groq (LLM gratuito) + HuggingFace Embeddings (local/gratuito).
+Sem necessidade de cartão de crédito.
 """
 
 from typing import List, Tuple, Dict, Optional
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.documents import Document
 
-# Prompt jurídico especializado em português
 PROMPT_JURIDICO = """Você é um assistente jurídico especializado e preciso.
 Responda à pergunta do usuário usando EXCLUSIVAMENTE os documentos fornecidos como contexto.
 
@@ -29,17 +30,24 @@ PERGUNTA DO USUÁRIO: {question}
 
 RESPOSTA FUNDAMENTADA (com citações de fonte):"""
 
+# Modelos disponíveis no Groq (gratuitos)
+MODELOS_GROQ = {
+    "llama-3.3-70b-versatile": "Llama 3.3 70B — Melhor qualidade",
+    "llama-3.1-8b-instant":    "Llama 3.1 8B — Mais rápido",
+    "mixtral-8x7b-32768":      "Mixtral 8x7B — Contexto longo",
+}
+
 
 class RAGEngine:
     """
-    Motor principal do sistema RAG.
-    Gerencia embeddings, vector store FAISS e chamadas ao LLM.
+    Motor RAG usando Groq (LLM) + HuggingFace all-MiniLM-L6-v2 (embeddings locais).
+    100% gratuito para uso em demos.
     """
 
     def __init__(
         self,
         api_key: str,
-        model: str = "gpt-3.5-turbo",
+        model: str = "llama-3.3-70b-versatile",
         temperature: float = 0.1,
         max_tokens: int = 1500,
         top_k: int = 3,
@@ -50,16 +58,18 @@ class RAGEngine:
         self.max_tokens = max_tokens
         self.top_k = top_k
 
-        # Embeddings: text-embedding-3-small é mais barato e rápido
-        self.embeddings = OpenAIEmbeddings(
-            openai_api_key=api_key,
-            model="text-embedding-3-small",
+        # Embeddings locais — roda no CPU, sem API key
+        # Faz download do modelo (~80MB) na primeira execução
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="all-MiniLM-L6-v2",
+            model_kwargs={"device": "cpu"},
+            encode_kwargs={"normalize_embeddings": True},
         )
 
-        # LLM principal
-        self.llm = ChatOpenAI(
-            openai_api_key=api_key,
-            model=model,
+        # LLM Groq — gratuito, muito rápido
+        self.llm = ChatGroq(
+            groq_api_key=api_key,
+            model_name=model,
             temperature=temperature,
             max_tokens=max_tokens,
         )
@@ -74,7 +84,7 @@ class RAGEngine:
         max_tokens: int = None,
         top_k: int = None,
     ) -> None:
-        """Atualiza configurações e recria o LLM se necessário."""
+        """Atualiza configurações e recria o LLM Groq se necessário."""
         changed = False
 
         if model and model != self.model_name:
@@ -89,11 +99,10 @@ class RAGEngine:
         if top_k:
             self.top_k = top_k
 
-        # Recria o LLM apenas se algum parâmetro mudou
         if changed:
-            self.llm = ChatOpenAI(
-                openai_api_key=self.api_key,
-                model=self.model_name,
+            self.llm = ChatGroq(
+                groq_api_key=self.api_key,
+                model_name=self.model_name,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
             )
@@ -108,7 +117,6 @@ class RAGEngine:
         Returns:
             Número de chunks criados
         """
-        # Splitter: chunks de 1000 chars com 200 de overlap para não perder contexto
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
             chunk_overlap=200,
@@ -138,7 +146,6 @@ class RAGEngine:
         if not langchain_docs:
             return 0
 
-        # Adiciona ao vector store existente ou cria novo
         if self.vector_store is None:
             self.vector_store = FAISS.from_documents(langchain_docs, self.embeddings)
         else:
@@ -148,12 +155,7 @@ class RAGEngine:
         return len(langchain_docs)
 
     def query(self, question: str) -> Dict:
-        """
-        Executa consulta RAG: busca semântica + geração com LLM.
-
-        Returns:
-            Dict com: answer, sources, confidence_score, chunks_used
-        """
+        """Executa consulta RAG: busca semântica + geração com LLM."""
         if self.vector_store is None:
             return {
                 "answer": "⚠️ Nenhum documento indexado. Carregue documentos primeiro.",
@@ -162,13 +164,11 @@ class RAGEngine:
                 "chunks_used": 0,
             }
 
-        # Busca semântica com scores de relevância (0-1, sendo 1 = mais relevante)
         try:
             docs_with_scores = self.vector_store.similarity_search_with_relevance_scores(
                 question, k=self.top_k
             )
         except Exception:
-            # Fallback: sem scores
             raw_docs = self.vector_store.similarity_search(question, k=self.top_k)
             docs_with_scores = [(doc, 0.8) for doc in raw_docs]
 
@@ -180,7 +180,6 @@ class RAGEngine:
                 "chunks_used": 0,
             }
 
-        # Monta contexto identificando cada fonte
         context_parts = []
         sources = []
 
@@ -188,9 +187,8 @@ class RAGEngine:
             filename = doc.metadata.get("source", "Documento desconhecido")
             chunk_idx = doc.metadata.get("chunk_index", 0)
             total_chunks = doc.metadata.get("total_chunks", "?")
-            confidence_pct = round(score * 100, 1)
+            confidence_pct = round(max(0.0, min(1.0, score)) * 100, 1)
 
-            # Contexto passado ao LLM com identificação clara de fonte
             context_parts.append(
                 f"[FONTE {i}: arquivo='{filename}', trecho={chunk_idx + 1}/{total_chunks}]\n"
                 f"{doc.page_content}"
@@ -210,10 +208,8 @@ class RAGEngine:
         context = "\n\n---\n\n".join(context_parts)
         avg_confidence = sum(s["score"] for s in sources) / len(sources)
 
-        # Prompt + LLM + Parser em cadeia LCEL
         prompt = ChatPromptTemplate.from_template(PROMPT_JURIDICO)
         chain = prompt | self.llm | StrOutputParser()
-
         answer = chain.invoke({"context": context, "question": question})
 
         return {
@@ -224,6 +220,6 @@ class RAGEngine:
         }
 
     def clear(self) -> None:
-        """Limpa o vector store e reseta o contador de chunks."""
+        """Limpa o vector store."""
         self.vector_store = None
         self.total_chunks = 0

@@ -3,7 +3,7 @@
 Demo interativo de um sistema RAG (Retrieval-Augmented Generation) aplicado
 ao contexto jurídico, desenvolvido com Streamlit + LangChain + FAISS + OpenAI.
 
-🌐 **Demo ao vivo:** [law-rag-demo.streamlit.app](https://law-rag-demo.streamlit.app)
+🌐 **Demo ao vivo:** [jurema.streamlit.app](https://jurema.streamlit.app)
 
 ## ✨ Funcionalidades
 
@@ -18,8 +18,8 @@ ao contexto jurídico, desenvolvido com Streamlit + LangChain + FAISS + OpenAI.
 ## 🚀 Instalação Local
 
 ```bash
-git clone https://github.com/seuusuario/law-rag-demo
-cd law-rag-demo
+git clone https://github.com/seuusuario/jurema
+cd jurema
 pip install -r requirements.txt
 
 # Configurar API Key
@@ -33,7 +33,7 @@ streamlit run app.py
 
 1. Fork este repositório
 2. Acesse [share.streamlit.io](https://share.streamlit.io)
-3. Conecte ao GitHub, selecione `law-rag-demo`
+3. Conecte ao GitHub, selecione `jurema`
 4. Em **Advanced Settings → Secrets**, adicione:
    ```toml
    OPENAI_API_KEY = "sk-sua-chave-aqui"

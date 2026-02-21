@@ -96,17 +96,18 @@ with st.sidebar:
     st.subheader("🔑 API Key")
     api_key = ""
 
-    # Tenta Streamlit Cloud Secrets primeiro
-    try:
-        api_key = st.secrets["OPENAI_API_KEY"]
-        st.success("✅ API Key via Secrets")
-    except Exception:
-        api_key = st.text_input(
-            "OpenAI API Key:",
-            type="password",
-            placeholder="sk-...",
-            help="Sua chave em platform.openai.com/api-keys",
-        )
+# Tenta Streamlit Cloud Secrets primeiro
+try:
+    api_key = st.secrets["GROQ_API_KEY"]   # ← era OPENAI_API_KEY
+    st.success("✅ API Key via Secrets")
+except Exception:
+    api_key = st.text_input(
+        "Groq API Key:",                    # ← era "OpenAI API Key"
+        type="password",
+        placeholder="gsk_...",             # ← era "sk-..."
+        help="Obtenha grátis em console.groq.com",
+    )
+
 
     # Inicializa ou reinicializa o motor RAG quando a key muda
     if api_key and api_key != st.session_state.get("_last_api_key", ""):
@@ -125,12 +126,17 @@ with st.sidebar:
 
     # ── CONFIGURAÇÕES AVANÇADAS ──────────
     with st.expander("⚙️ Configurações Avançadas"):
-        modelo = st.selectbox(
-            "Modelo LLM:",
-            ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"],
-            index=0,
-            help="GPT-3.5 = rápido e barato | GPT-4 = mais preciso",
-        )
+modelo = st.selectbox(
+    "Modelo LLM:",
+    [
+        "llama-3.3-70b-versatile",   # melhor qualidade
+        "llama-3.1-8b-instant",       # mais rápido
+        "mixtral-8x7b-32768",         # contexto longo
+    ],
+    index=0,
+    help="Todos gratuitos no Groq 🆓",
+)
+
         temperatura = st.slider(
             "Temperatura:", 0.0, 1.0, 0.1, 0.05,
             help="0 = determinístico | 1 = criativo"
@@ -407,7 +413,11 @@ if st.session_state.last_result:
     mc1.metric("⏱️ Tempo", format_elapsed(res.get("elapsed", 0)))
     mc2.metric("🎯 Confiança", f"{res['confidence_score']:.0f}%")
     mc3.metric("📊 Trechos usados", res["chunks_used"])
-    mc4.metric("🤖 Modelo", st.session_state.rag_engine.model_name if st.session_state.rag_engine else "-")
+    mc4.metric("🤖 Modelo", 
+    st.session_state.rag_engine.model_name.split("-")[0].upper()   # ex: "LLAMA"
+    if st.session_state.rag_engine else "-"
+)
+
 
     # Fontes utilizadas
     if res.get("sources"):

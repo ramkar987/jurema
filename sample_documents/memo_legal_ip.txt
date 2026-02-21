@@ -1,0 +1,89 @@
+MEMORANDO JURÍDICO
+Assunto: Direitos de Propriedade Intelectual — Software SaaS
+Confidencial — Uso Interno
+
+[Página 1]
+
+DE: Departamento Jurídico
+PARA: Diretoria Executiva
+DATA: 10 de janeiro de 2024
+REF: Proteção de PI — Produto "JurisAI v2.0"
+
+1. OBJETO DO MEMORANDO
+
+O presente memorando tem por objetivo analisar a situação jurídica dos direitos
+de propriedade intelectual relacionados ao software "JurisAI v2.0", desenvolvido
+internamente, e recomendar medidas de proteção adequadas à legislação brasileira
+(Lei nº 9.609/98 — Lei de Software e Lei nº 9.610/98 — Lei de Direitos Autorais).
+
+[Página 2]
+
+2. TITULARIDADE E AUTORIA
+
+2.1. Conforme o artigo 4º da Lei de Software (Lei 9.609/98), pertence
+exclusivamente ao empregador o software desenvolvido durante a vigência do
+contrato de trabalho ou vínculo estatutário, salvo disposição contratual em
+contrário ou quando o resultado de atividade autônoma.
+
+2.2. Todos os colaboradores do departamento de tecnologia assinaram cláusula
+de cessão de direitos no contrato de trabalho, confirmando a titularidade
+exclusiva da empresa sobre o JurisAI v2.0.
+
+2.3. RECOMENDAÇÃO: Registrar o software no INPI (Instituto Nacional da
+Propriedade Industrial) dentro de 30 dias para garantir prioridade legal.
+
+[Página 3]
+
+3. PROTEÇÃO CONTRA CONCORRÊNCIA DESLEAL
+
+3.1. Os algoritmos proprietários de análise jurídica configuram segredo
+industrial protegido pelo artigo 195, XI da Lei de Propriedade Industrial
+(Lei 9.279/96).
+
+3.2. A divulgação não autorizada de código-fonte ou metodologias por ex-funcionários
+pode ser enquadrada como crime de concorrência desleal, sujeito a pena de
+detenção de 3 meses a 1 ano, ou multa.
+
+3.3. RECOMENDAÇÃO: Implementar acordos de confidencialidade (NDA) reforçados
+com cláusula penal de R$ 500.000,00 para ex-colaboradores com acesso ao núcleo
+do sistema.
+
+[Página 4]
+
+4. LICENCIAMENTO E CONTRATO SaaS
+
+4.1. O modelo de negócios SaaS (Software as a Service) implica licença de uso,
+NÃO transferência de propriedade ao cliente. Esta distinção é fundamental para:
+  - Manter direitos autorais intactos;
+  - Permitir atualizações e rescisão de acesso;
+  - Limitar responsabilidade contratual.
+
+4.2. Os contratos de licença devem especificar explicitamente:
+  a) Restrição de engenharia reversa;
+  b) Proibição de sublicenciamento;
+  c) Limitação de responsabilidade a 12 meses de mensalidade paga.
+
+5. MARCA REGISTRADA
+
+5.1. A denominação "JurisAI" não possui registro junto ao INPI.
+RECOMENDAÇÃO URGENTE: Protocolar pedido de registro na classe 42 (serviços
+de tecnologia) até fevereiro de 2024, considerando que um concorrente pode
+registrar a mesma marca.
+
+[Página 5]
+
+6. CONCLUSÕES E PRAZOS
+
+6.1. AÇÕES IMEDIATAS (até 31/01/2024):
+  - Registro do software no INPI: responsável João Pedro (TI) + Dr. Ana Beatriz (Jurídico)
+  - Protocolo de pedido de marca "JurisAI": responsável Dr. Ana Beatriz
+  - Revisão dos contratos de colaboradores: responsável RH + Jurídico
+
+6.2. AÇÕES DE MÉDIO PRAZO (até 30/06/2024):
+  - Atualizar contratos com clientes para incluir cláusulas de PI atualizadas
+  - Implementar política interna de gestão de segredos industriais
+  - Realizar treinamento de colaboradores sobre proteção de PI
+
+Dr. Ana Beatriz Rodrigues
+OAB/RS 45.678
+Departamento Jurídico

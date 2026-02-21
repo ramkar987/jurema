@@ -1,12 +1,12 @@
 """
-Motor RAG com Groq (LLM gratuito) + HuggingFace Embeddings (local/gratuito).
-Sem necessidade de cartão de crédito.
+Motor RAG com Groq (LLM gratuito) + FastEmbed/ONNX (embeddings locais sem PyTorch).
+100% gratuito, funciona no Streamlit Cloud sem erros de meta tensor.
 """
 
 from typing import List, Tuple, Dict, Optional
 
 from langchain_groq import ChatGroq
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
@@ -30,18 +30,11 @@ PERGUNTA DO USUÁRIO: {question}
 
 RESPOSTA FUNDAMENTADA (com citações de fonte):"""
 
-# Modelos disponíveis no Groq (gratuitos)
-MODELOS_GROQ = {
-    "llama-3.3-70b-versatile": "Llama 3.3 70B — Melhor qualidade",
-    "llama-3.1-8b-instant":    "Llama 3.1 8B — Mais rápido",
-    "mixtral-8x7b-32768":      "Mixtral 8x7B — Contexto longo",
-}
-
 
 class RAGEngine:
     """
-    Motor RAG usando Groq (LLM) + HuggingFace all-MiniLM-L6-v2 (embeddings locais).
-    100% gratuito para uso em demos.
+    Motor RAG usando Groq (LLM) + FastEmbed ONNX (embeddings locais).
+    Sem PyTorch, sem erros de meta tensor, funciona no Streamlit Cloud.
     """
 
     def __init__(
@@ -58,12 +51,9 @@ class RAGEngine:
         self.max_tokens = max_tokens
         self.top_k = top_k
 
-        # Embeddings locais — roda no CPU, sem API key
-        # Faz download do modelo (~80MB) na primeira execução
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name="all-MiniLM-L6-v2",
-            model_kwargs={"device": "cpu"},
-            encode_kwargs={"normalize_embeddings": True},
+        # FastEmbed: usa ONNX Runtime, sem PyTorch, ~60MB, funciona no Streamlit Cloud
+        self.embeddings = FastEmbedEmbeddings(
+            model_name="BAAI/bge-small-en-v1.5"
         )
 
         # LLM Groq — gratuito, muito rápido

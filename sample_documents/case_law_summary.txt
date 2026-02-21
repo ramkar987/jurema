@@ -1,0 +1,76 @@
+SUMÁRIO DE JURISPRUDÊNCIA
+Tema: Responsabilidade Civil em Contratos de Tecnologia
+Compilação para uso interno — Advogados e Consultores
+
+Linha 1-15: INTRODUÇÃO
+Este documento compila decisões relevantes do STJ e TJ-RS sobre responsabilidade
+civil em contratos de prestação de serviços de tecnologia, com foco em SaaS
+(Software as a Service) e sistemas de inteligência artificial.
+
+Linha 16-30: CASO 1 — STJ REsp 1.789.456/SP (2022)
+Relator: Min. Nancy Andrighi — 3ª Turma
+Tema: Responsabilidade por falhas em sistema de automação contratual
+
+EMENTA: A empresa fornecedora de software responde objetivamente pelos danos
+causados ao usuário em decorrência de falhas no sistema, nos termos do CDC
+(art. 14), quando a relação é de consumo. Nas relações B2B, aplica-se a
+responsabilidade subjetiva, cabendo ao contratante demonstrar a culpa do
+fornecedor. A cláusula limitadora de responsabilidade é válida nas relações
+entre empresas, desde que não afaste a responsabilidade por dolo.
+
+DECISÃO: Provido parcialmente. Mantida cláusula limitadora de responsabilidade
+ao valor contratual pago nos últimos 12 meses.
+
+Linha 31-45: CASO 2 — TJ-RS Apelação 5012345-78.2021.8.21.0001 (2023)
+Relator: Des. Marco Aurélio de Oliveira
+Tema: Rescisão unilateral de contrato SaaS e devolução de dados
+
+EMENTA: O fornecedor de SaaS é obrigado a disponibilizar ao cliente os dados
+inseridos na plataforma em formato legível (portabilidade de dados), mesmo após
+rescisão contratual, sob pena de configurar retenção indevida de dados e
+violação à LGPD (Lei 13.709/2018). O prazo para disponibilização é de 15 dias
+corridos após solicitação formal.
+
+DECISÃO: Improvido recurso do fornecedor. Mantida condenação à exportação dos
+dados e multa diária de R$ 5.000,00 por descumprimento.
+
+Linha 46-52: CASO 3 — STJ REsp 1.934.123/RS (2023)
+Tema: Uso de IA em decisões jurídicas — responsabilidade
+
+EMENTA: A utilização de sistema de inteligência artificial como ferramenta
+auxiliar na análise jurídica não afasta a responsabilidade do profissional
+do Direito pela decisão final. O advogado que utiliza IA para elaboração de
+peças processuais responde pessoalmente pelos erros, não podendo transferir
+a culpa ao fornecedor do sistema. A IA é meio, não agente.
+
+Linha 53-70: PRINCÍPIOS CONSOLIDADOS PELA JURISPRUDÊNCIA
+
+1. LIMITAÇÃO DE RESPONSABILIDADE: Válida em contratos B2B; inválida contra consumidor
+   se afastar totalmente a responsabilidade por falha do produto (CDC art. 51, I).
+
+2. PORTABILIDADE DE DADOS (LGPD): Direito fundamental; fornecedor deve garantir
+   exportação em até 15 dias após solicitação. Multa por descumprimento: variável
+   entre R$ 2.000/dia e R$ 50.000.000,00 conforme ANPD.
+
+3. SLA E DISPONIBILIDADE: SLA abaixo de 99% mensal configura inadimplemento parcial
+   se o contrato não especificar percentual diferente. Créditos de compensação não
+   substituem perdas e danos quando dano real é comprovado.
+
+4. PROPRIEDADE DOS DADOS: Os dados inseridos pelo cliente na plataforma pertencem
+   ao cliente, não ao fornecedor de SaaS, salvo dados anonimizados para melhoria
+   do serviço (deve estar previsto no contrato e Política de Privacidade).
+
+5. PRAZO PRESCRICIONAL: Ações por vício do produto/serviço: 5 anos (CDC art. 27)
+   para relações de consumo; 10 anos (CC art. 205) para relações civis.
+
+Linha 71-80: RECOMENDAÇÕES PRÁTICAS
+
+Para contratos de tecnologia seguros:
+- Definir SLA mínimo de 99,5% com métricas claras de medição
+- Incluir cláusula de portabilidade de dados em conformidade com LGPD
+- Limitar responsabilidade a 12 meses de contrato pago (válido no B2B)
+- Prever procedimento específico para rescisão com devolução de dados
+- Incluir arbitragem como meio de resolução de disputas (recomendado CAMARB)
+
+Compilado por: Equipe de Pesquisa Jurídica
+Atualizado em: Janeiro/2024
